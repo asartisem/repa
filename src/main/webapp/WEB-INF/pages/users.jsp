@@ -14,7 +14,7 @@
     }
 
     function closeAddUserDialog() {
-      $('#formUpdateUser').hide();
+      $('#formAddUser').hide();
     }
 
     function openUpdateUserDialog(userName, userPasswod) {

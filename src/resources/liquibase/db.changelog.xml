@@ -50,12 +50,12 @@
         INSERT INTO books (name, author) VALUES ('Собака Баскервилей','Артур Конан Дойль');
         INSERT INTO books (name, author) VALUES ('Код Да Винчи','Дэн Браун');
         INSERT INTO books (name, author) VALUES ('Война и мир','Лев Толстой');
-        INSERT INTO books (name, author) VALUES ('Преступление и наказание','Федор Достоевский',);
+        INSERT INTO books (name, author) VALUES ('Преступление и наказание','Федор Достоевский');
         INSERT INTO books (name, author) VALUES ('Анна Каренина','Лев Толстой');
         INSERT INTO books (name, author) VALUES ('Теория Всего','Стивен Хокинг');
         INSERT INTO books (name, author) VALUES ('Евгений Онегин','Александр Пушкин');
-        INSERT INTO books (name, author) VALUES ('Анна Васева','Лев Толстой');
-        INSERT INTO books (name, author) VALUES ('Анна Пушкина','Горлов');
+        INSERT INTO books (name, author) VALUES ('Декабристы','Лев Толстой');
+        INSERT INTO books (name, author) VALUES ('Руслан и Людмила','Александр Пушкин');
         INSERT INTO users (username, password) VALUES ('tisem', '12345678');
         INSERT INTO users (username, password) VALUES ('vasya', '1234');
         INSERT INTO book_to_user (username, book_isn) VALUES ('tisem', '3');
