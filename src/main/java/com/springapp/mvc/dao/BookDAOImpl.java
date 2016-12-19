@@ -51,7 +51,6 @@ public class BookDAOImpl implements BookDAO{
                 "ON books.isn = book_to_user.book_isn " +
                 "ORDER BY books.author, books.isn" +
                 " LIMIT " + limit + " OFFSET " + offset;
-//                + limit + " offset " + offset;
         return jdbcTemplate.query(sql, new BookRowMapper());
     }
 
