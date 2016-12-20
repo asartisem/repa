@@ -56,6 +56,7 @@
         INSERT INTO books (name, author) VALUES ('Евгений Онегин','Александр Пушкин');
         INSERT INTO books (name, author) VALUES ('Декабристы','Лев Толстой');
         INSERT INTO books (name, author) VALUES ('Руслан и Людмила','Александр Пушкин');
+        INSERT INTO books (name, author) VALUES ('Сказки','Александр Пушкин');
         INSERT INTO users (username, password) VALUES ('tisem', '12345678');
         INSERT INTO users (username, password) VALUES ('vasya', '1234');
         INSERT INTO book_to_user (username, book_isn) VALUES ('tisem', '3');
