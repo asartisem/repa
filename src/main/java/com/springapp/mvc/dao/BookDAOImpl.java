@@ -30,14 +30,13 @@ public class BookDAOImpl implements BookDAO{
                 "LEFT JOIN book_to_user " +
                 "ON books.isn = book_to_user.book_isn " +
                 "WHERE books.isn = ?";
-        return jdbcTemplate.query(sql, new BookRowMapper(), isn).get(0);
+        return jdbcTemplate.queryForObject(sql, new BookRowMapper(), isn);
     }
 
     @Override
     public String getHandlerByIsn(int isn) {
-        String sql = "SELECT username FROM book_to_user WHERE book_isn=" + isn;
-        List<String> list = jdbcTemplate.queryForList(sql, String.class);
-        return list.get(0);
+        String sql = "SELECT username FROM book_to_user WHERE book_isn=?";
+        return jdbcTemplate.queryForObject(sql, String.class, isn);
     }
 
     public void updateBook(Book book) {
