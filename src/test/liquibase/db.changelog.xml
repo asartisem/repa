@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+<changeSet id="schema" author="tisem">
+    <createTable tableName="books">
+        <column name="isn" autoIncrement="true" type="int">
+            <constraints primaryKey="true" nullable="false" primaryKeyName="pk_books" />
+        </column>
+        <column name="name" type="varchar(255)"/>
+        <column name="author" type="varchar(255)"/>
+        <!--<column name="presence" type="boolean"/>-->
+    </createTable>
+
+    <createTable tableName="users">
+        <!--<column name="id" autoIncrement="true" type="int">-->
+            <!--<constraints primaryKey="true" nullable="false" primaryKeyName="pk_users" />-->
+        <!--</column>-->
+        <column name="username" type="varchar(50)">
+            <constraints primaryKey="true" nullable="false" primaryKeyName="pk_users" />
+        </column>
+        <column name="password" type="varchar(50)"/>
+        <column name="enabled"  type="boolean" defaultValue="true" />
+    </createTable>
+
+    <createTable tableName="authorities">
+        <column name="id" autoIncrement="true" type="int">
+            <constraints primaryKey="true" nullable="false" primaryKeyName="pk_authorities" />
+        </column>
+        <column name="username" type="varchar(50)">
+            <constraints foreignKeyName="fk_authorities_users" references="users(username)" />
+        </column>
+        <column name="authority" type="varchar(50)"/>
+    </createTable>
+
+    <createTable tableName="book_to_user">
+        <column name="username" type="varchar(50)">
+            <constraints primaryKey="true" primaryKeyName="pk_book_to_user" foreignKeyName="fk_users" references="users(username)" />
+        </column>
+        <column name="book_isn" type="int">
+            <constraints primaryKey="true" foreignKeyName="fk_books" references="books(isn)" />
+        </column>
+    </createTable>
+
+    <sql>
+        INSERT INTO books (name, author) VALUES ('Мастер и Маргарита','Михаил Булгаков');
+        INSERT INTO books (name, author) VALUES ('Собака Баскервилей','Артур Конан Дойль');
+        INSERT INTO books (name, author) VALUES ('Код Да Винчи','Дэн Браун');
+        INSERT INTO books (name, author) VALUES ('Война и мир','Лев Толстой');
+        INSERT INTO books (name, author) VALUES ('Преступление и наказание','Федор Достоевский');
+        INSERT INTO books (name, author) VALUES ('Анна Каренина','Лев Толстой');
+        INSERT INTO books (name, author) VALUES ('Теория Всего','Стивен Хокинг');
+        INSERT INTO books (name, author) VALUES ('Евгений Онегин','Александр Пушкин');
+        INSERT INTO books (name, author) VALUES ('Декабристы','Лев Толстой');
+        INSERT INTO books (name, author) VALUES ('Руслан и Людмила','Александр Пушкин');
+        INSERT INTO books (name, author) VALUES ('Сказки','Александр Пушкин');
+        INSERT INTO users (username, password) VALUES ('tisem', '12345678');
+        INSERT INTO users (username, password) VALUES ('vasya', '1234');
+        INSERT INTO book_to_user (username, book_isn) VALUES ('tisem', '3');
+        INSERT INTO book_to_user (username, book_isn) VALUES ('vasya', '2');
+        INSERT INTO book_to_user (username, book_isn) VALUES ('tisem', '5');
+        INSERT INTO book_to_user (username, book_isn) VALUES ('vasya', '7');
+        INSERT INTO authorities (username, authority) VALUES ('tisem', 'ROLE_USER');
+        INSERT INTO authorities (username, authority) VALUES ('vasya', 'ROLE_USER');
+    </sql>
+</changeSet>
+</databaseChangeLog>

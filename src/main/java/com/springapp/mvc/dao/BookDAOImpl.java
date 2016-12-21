@@ -25,6 +25,13 @@ public class BookDAOImpl implements BookDAO{
         jdbcTemplate.update(sql, book.getIsn(), book.getBookName(), book.getBookAuthor());
     }
 
+    @Override
+    public String getHandlerByIsn(int isn) {
+        String sql = "SELECT username FROM book_to_user WHERE book_isn=" + isn;
+        List<String> list = jdbcTemplate.queryForList(sql, String.class);
+        return list.get(0);
+    }
+
     public void updateBook(Book book) {
         String sql = "UPDATE books SET name = ?, author = ? WHERE isn = ?";
         jdbcTemplate.update(sql, new Object[] {book.getBookName(), book.getBookAuthor(), book.getIsn()});

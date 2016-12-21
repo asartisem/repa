@@ -4,12 +4,11 @@ import com.springapp.mvc.model.User;
 import com.springapp.mvc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -51,5 +50,21 @@ public class UserController {
         this.userService.updateUser(user);
 
         return "redirect:/users";
+    }
+
+
+    @ExceptionHandler(value = DuplicateKeyException.class)
+    public ModelAndView dublicateExceptionHandlerUsers() {
+        ModelAndView modelAndView = new ModelAndView("error");
+        modelAndView.addObject("error", "Пользователь c таким именем уже есть");
+        return modelAndView;
+    }
+
+
+    @ExceptionHandler(value = DataIntegrityViolationException.class)
+    public ModelAndView removeExceptionHandlerForUsers() {
+        ModelAndView modelAndView = new ModelAndView("error");
+        modelAndView.addObject("error", "Нельзя удалить пользователя с книгой на руках");
+        return modelAndView;
     }
 }

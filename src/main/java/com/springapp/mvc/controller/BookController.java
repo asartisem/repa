@@ -4,9 +4,11 @@ import com.springapp.mvc.model.Book;
 import com.springapp.mvc.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -30,8 +32,7 @@ public class BookController {
     @RequestMapping(value = "/moreBooks", method = RequestMethod.GET, produces = {"application/json; charset=utf-8"})
     @ResponseBody
     public List<Book> getMoreBooks(@RequestParam int offset) {
-        List<Book> list = bookService.listBooks(5, offset);
-        return list;
+        return bookService.listBooks(5, offset);
     }
 
     @RequestMapping("/remove-book/{isn}")
@@ -71,5 +72,12 @@ public class BookController {
         this.bookService.returnBook(isn);
 
         return "redirect:/books";
+    }
+
+    @ExceptionHandler(value = DuplicateKeyException.class)
+    public ModelAndView exceptionHandlerForBooks() {
+        ModelAndView modelAndView = new ModelAndView("error");
+        modelAndView.addObject("error", "Книга с таким ISN уже есть");
+        return modelAndView;
     }
 }
