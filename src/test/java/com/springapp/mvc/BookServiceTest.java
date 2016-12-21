@@ -8,9 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.List;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration({"classpath:/services-test-configuration.xml"})
@@ -27,16 +26,9 @@ public class BookServiceTest {
 
         bookService.addBook(book);
 
-        List<Book> listBooks = bookService.listBooks(15, 0);
+        Book testBook = bookService.getBookByIsn(123);
 
-        Book testBook = null;
-        for(Book b: listBooks){
-            if (b.getIsn() == book.getIsn()) {
-                testBook = b;
-            }
-        }
-
-        assertTrue(book.getBookName().equals(testBook.getBookName()));
+        assertEquals(book.getBookName(), testBook.getBookName());
     }
 
     @Test
@@ -48,16 +40,9 @@ public class BookServiceTest {
 
         bookService.updateBook(book);
 
-        List<Book> listBooks = bookService.listBooks(15, 0);
+        Book testBook = bookService.getBookByIsn(2);
 
-        Book testBook = null;
-        for(Book b: listBooks){
-            if (b.getIsn() == book.getIsn()) {
-                testBook = b;
-            }
-        }
-
-        assertTrue(book.getBookName().equals(testBook.getBookName()));
+        assertEquals(book.getBookName(), testBook.getBookName());
     }
 
     @Test
@@ -68,6 +53,6 @@ public class BookServiceTest {
 
         String testUserName = bookService.getHandlerByIsn(book_isn);
 
-        assertTrue(username.equals(testUserName));
+        assertEquals(username, testUserName);
     }
 }

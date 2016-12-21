@@ -25,6 +25,14 @@ public class BookDAOImpl implements BookDAO{
         jdbcTemplate.update(sql, book.getIsn(), book.getBookName(), book.getBookAuthor());
     }
 
+    public Book getBookByIsn(int isn) {
+        String sql = "SELECT * FROM books " +
+                "LEFT JOIN book_to_user " +
+                "ON books.isn = book_to_user.book_isn " +
+                "WHERE books.isn = ?";
+        return jdbcTemplate.query(sql, new BookRowMapper(), isn).get(0);
+    }
+
     @Override
     public String getHandlerByIsn(int isn) {
         String sql = "SELECT username FROM book_to_user WHERE book_isn=" + isn;
@@ -57,8 +65,8 @@ public class BookDAOImpl implements BookDAO{
                 "LEFT JOIN book_to_user " +
                 "ON books.isn = book_to_user.book_isn " +
                 "ORDER BY books.author, books.isn" +
-                " LIMIT " + limit + " OFFSET " + offset;
-        return jdbcTemplate.query(sql, new BookRowMapper());
+                " LIMIT ? OFFSET ?";
+        return jdbcTemplate.query(sql, new BookRowMapper(), limit, offset);
     }
 
 

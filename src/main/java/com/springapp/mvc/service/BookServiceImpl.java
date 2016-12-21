@@ -25,6 +25,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public Book getBookByIsn(int isn) {
+        return bookDAO.getBookByIsn(isn);
+    }
+
+    @Override
     @Transactional
     public String getHandlerByIsn(int isn) {
         return this.bookDAO.getHandlerByIsn(isn);

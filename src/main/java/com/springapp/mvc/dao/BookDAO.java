@@ -8,6 +8,8 @@ import java.util.List;
 public interface BookDAO {
     void addBook (Book book);
 
+    Book getBookByIsn(int isn);
+
     String getHandlerByIsn(int isn);
 
     void updateBook (Book book);

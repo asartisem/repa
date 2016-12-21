@@ -7,6 +7,8 @@ import java.util.List;
 public interface BookService {
     void addBook (Book boook);
 
+    Book getBookByIsn(int isn);
+
     String getHandlerByIsn(int isn);
 
     void updateBook(Book book);
