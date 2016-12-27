@@ -27,8 +27,8 @@
 						var row = $("<tr></tr>");
 						var bookIsn = $("<td><a href=\"#formUpdateBook\" onclick = \"openUpdateBookDialog(" + data[i].isn
 								+", '" + data[i].bookName + "', '" + data[i].bookAuthor + "')\">" + data[i].isn + "</a></td>");
-						var bookName = $("<td>" + data[i].bookName + "</td>");
-						var bookAuthor = $("<td>" + data[i].bookAuthor + "</td>");
+						var bookName = $("<td class=\"book-name\">" + data[i].bookName + "</td>");
+						var bookAuthor = $("<td class=\"book-author\">" + data[i].bookAuthor + "</td>");
 						var holder;
 						var deleteButton;
 						if (data[i].userName == login) {
@@ -94,6 +94,35 @@
 		function takeButtonClick(name, isn) {
 			document.location.href = "/take-book/" + name + "/" + isn;
 		}
+
+		function sort(field) {
+		    var jQField = $(field);
+		    var bookTable = $('#bookTable');
+		    var sortField = jQField.attr('sort-field');
+		    var rowArray = bookTable.find('tr:not(:has(th))');
+		    var strActive = 'active';
+
+		    if (jQField.hasClass(strActive) == false) {
+		        bookTable.find('.' + strActive).removeClass(strActive);
+		        jQField.addClass(strActive);
+		    }
+
+		    rowArray.sort( function(a, b){
+		        var aValue = $(a).find('.' + sortField).text();
+		        var bValue = $(b).find('.' + sortField).text();
+
+		        return aValue > bValue;
+		    });
+
+		    if (jQField.attr('sort-type') == 'ASC') {
+		        rowArray = rowArray.get().reverse();
+		        jQField.attr('sort-type', 'DESC');
+		    } else {
+		        jQField.attr('sort-type', 'ASC');
+		    }
+
+		    bookTable.append(rowArray);
+		}
 	</script>
 
 </head>
@@ -144,16 +173,16 @@
 		<table id="bookTable" class="tg">
 			<tr>
 				<th>ISN</th>
-				<th width="120">Title</th>
-				<th width="120">Author</th>
+				<th width="120" class="sort-header" sort-field="book-name" sort-type="" onclick="sort(this)">Title</th>
+				<th width="120" class="sort-header active" sort-field="book-author" sort-type="ASC" onclick="sort(this)">Author</th>
 				<th width="60">Holder</th>
 				<th width="60">Delete</th>
 			</tr>
 			<c:forEach items="${listBooks}" var="book">
 				<tr>
 					<td><a href="#formUpdateBook" onclick = "openUpdateBookDialog(${book.isn},'${book.bookName}','${book.bookAuthor}')">${book.isn}</a></td>
-					<td>${book.bookName}</td>
-					<td>${book.bookAuthor}</td>
+					<td class="book-name">${book.bookName}</td>
+					<td class="book-author">${book.bookAuthor}</td>
 					<td>
 						<c:choose>
 							<c:when test="${book.userName eq loginName}">
